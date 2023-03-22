@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {colors} from '../colors';
@@ -29,9 +29,16 @@ const LeftIcon = styled.View`
   border-color: ${secondary};
   padding-right: 10px;
 `;
+const RightIcon = styled.TouchableOpacity`
+  position: absolute;
+  top: 35px;
+  right: 15px;
+  z-index: 1;
+`;
 
-const StyledTextInput = ({icon, label, ...props}) => {
+const StyledTextInput = ({icon, label, isPassword, ...props}) => {
   const [inputBackgroundColor, setInputBackgroundColor] = useState(primary);
+  const [hidePassword, setHidePassword] = useState(true);
   const customOnBlur = () => {
     props?.onBlur;
     setInputBackgroundColor(primary);
@@ -52,7 +59,20 @@ const StyledTextInput = ({icon, label, ...props}) => {
         style={{backgroundColor: inputBackgroundColor, ...props?.style}}
         onBlur={customOnBlur}
         onFocus={customOnFocus}
+        secureTextEntry={isPassword && hidePassword}
       />
+      {isPassword && (
+        <RightIcon
+          onPress={() => {
+            setHidePassword(!hidePassword);
+          }}>
+          <Icon
+            name={hidePassword ? 'eye-off' : 'eye'}
+            size={30}
+            color={tertiary}
+          />
+        </RightIcon>
+      )}
     </View>
   );
 };

@@ -14,16 +14,16 @@ import RowContainer from '../components/Containers/RowContainer';
 
 const {primary, secondary} = colors;
 
-const Login = () => {
+const Signup = () => {
   const [message, setMessage] = useState('');
   const [isSuccessMessage, setIsSuccessMessage] = useState(false);
-  const handleLogin = async (credentials, setSubmitting) => {
+  const handleSignup = async (credentials, setSubmitting) => {
     try {
       setMessage(null);
 
       setSubmitting(false);
     } catch (error) {
-      setMessage('Login failed: ', error.message);
+      setMessage('Signup failed: ', error.message);
       setSubmitting(false);
     }
   };
@@ -34,17 +34,39 @@ const Login = () => {
           Enter your account credentials
         </RegularText>
         <Formik
-          initialValues={{email: '', password: ''}}
+          initialValues={{
+            fullName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+          }}
           onSubmit={(values, {setSubmitting}) => {
-            if (values.email == '' || values.password == '') {
+            if (
+              values.fullName == '' ||
+              values.confirmPassword == '' ||
+              values.email == '' ||
+              values.password == ''
+            ) {
               setMessage('Please fill in all the fields');
               setSubmitting(false);
+            } else if (values.password !== values.confirmPassword) {
+              setMessage('Passwords do not match');
+              setSubmitting(false);
             } else {
-              handleLogin(value, setSubmitting);
+              handleSignup(value, setSubmitting);
             }
           }}>
           {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (
             <>
+              <StyledTextInput
+                label="Full Name"
+                icon="account"
+                placeholder="Tom Jerry"
+                onChangeText={handleChange('fullName')}
+                onBlur={handleBlur('fullName')}
+                value={values.fullName}
+                style={{marginBottom: 15}}
+              />
               <StyledTextInput
                 label="Email Address"
                 icon="email-variant"
@@ -53,7 +75,7 @@ const Login = () => {
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
                 value={values.email}
-                style={{marginBottom: 25}}
+                style={{marginBottom: 15}}
               />
               <StyledTextInput
                 label="Password"
@@ -63,13 +85,23 @@ const Login = () => {
                 onBlur={handleBlur('password')}
                 value={values.password}
                 isPassword={true}
-                style={{marginBottom: 25}}
+                style={{marginBottom: 15}}
+              />
+              <StyledTextInput
+                label="Confirm Password"
+                icon="lock-open"
+                placeholder="********"
+                onChangeText={handleChange('confirmPassword')}
+                onBlur={handleBlur('confirmPassword')}
+                value={values.confirmPassword}
+                isPassword={true}
+                style={{marginBottom: 15}}
               />
               <MsgBox style={{marginBottom: 25}} success={isSuccessMessage}>
                 {message || ' '}
               </MsgBox>
               {!isSubmitting && (
-                <RegularButton onPress={handleSubmit}>Login</RegularButton>
+                <RegularButton onPress={handleSubmit}>Signup</RegularButton>
               )}
               {isSubmitting && (
                 <RegularButton disabled={true}>
@@ -78,14 +110,10 @@ const Login = () => {
                     color={primary}></ActivityIndicator>
                 </RegularButton>
               )}
-              <RowContainer>
-                <PressableText onPress={() => {}}>
-                  New account sign up
-                </PressableText>
-                <PressableText onPress={() => {}}>
-                  Forgot Password
-                </PressableText>
-              </RowContainer>
+
+              <PressableText style={{paddingVertical: 15}} onPress={() => {}}>
+                Sign in to existing account
+              </PressableText>
             </>
           )}
         </Formik>
@@ -94,4 +122,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
