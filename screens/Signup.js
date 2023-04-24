@@ -86,6 +86,7 @@ const Signup = () => {
                 value={values.password}
                 isPassword={true}
                 style={{marginBottom: 15}}
+                autoCapitalize="none"
               />
               <StyledTextInput
                 label="Confirm Password"
@@ -96,6 +97,7 @@ const Signup = () => {
                 value={values.confirmPassword}
                 isPassword={true}
                 style={{marginBottom: 15}}
+                autoCapitalize="none"
               />
               <MsgBox style={{marginBottom: 25}} success={isSuccessMessage}>
                 {message || ' '}
