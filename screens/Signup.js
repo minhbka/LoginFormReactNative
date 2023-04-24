@@ -53,7 +53,7 @@ const Signup = () => {
               setMessage('Passwords do not match');
               setSubmitting(false);
             } else {
-              handleSignup(value, setSubmitting);
+              handleSignup(values, setSubmitting);
             }
           }}>
           {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (
