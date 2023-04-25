@@ -12,14 +12,19 @@ import {colors} from '../components/colors';
 import IconHeader from '../components/Icons/IconHeader';
 const {primary, secondary} = colors;
 
-const ForgotPassword = () => {
+const ForgotPassword = ({navigation}) => {
   const [message, setMessage] = useState('');
   const [isSuccessMessage, setIsSuccessMessage] = useState(false);
+
+  const moveTo = (screen, payload) => {
+    navigation.navigate(screen, {...payload});
+  };
+
   const handleOnSubmit = async (credentials, setSubmitting) => {
     try {
       setMessage(null);
       //call backend
-
+      moveTo('ResetPassword');
       setSubmitting(false);
     } catch (error) {
       setMessage('Request failed: ', error.message);
@@ -40,7 +45,7 @@ const ForgotPassword = () => {
               setMessage('Please fill in all the fields');
               setSubmitting(false);
             } else {
-              handleOnSubmit(value, setSubmitting);
+              handleOnSubmit(values, setSubmitting);
             }
           }}>
           {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (

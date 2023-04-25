@@ -19,7 +19,7 @@ const FormWrapper = styled.View`
     return props.pinReady ? `opacity:1` : `opacity:0.3`;
   }}
 `;
-const ResetPassword = () => {
+const ResetPassword = ({navigation}) => {
   const [message, setMessage] = useState('');
   const [isSuccessMessage, setIsSuccessMessage] = useState(false);
   const MAX_CODE_LENGTH = 4;
@@ -36,9 +36,13 @@ const ResetPassword = () => {
   const [headerText, setHeaderText] = useState('');
   const [buttonText, setButtonText] = useState('');
   const [modalMessage, setModalMessage] = useState('');
+  const moveTo = (screen, payload) => {
+    navigation.navigate(screen, {...payload});
+  };
 
   const buttonHandler = () => {
     if (modalMessageType === 'success') {
+      moveTo('Login');
     }
     setModalVisible(false);
   };

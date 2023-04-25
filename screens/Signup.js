@@ -14,13 +14,17 @@ import RowContainer from '../components/Containers/RowContainer';
 
 const {primary, secondary} = colors;
 
-const Signup = () => {
+const Signup = ({navigation}) => {
   const [message, setMessage] = useState('');
   const [isSuccessMessage, setIsSuccessMessage] = useState(false);
+  const moveTo = (screen, payload) => {
+    navigation.navigate(screen, {...payload});
+  };
   const handleSignup = async (credentials, setSubmitting) => {
     try {
       setMessage(null);
 
+      moveTo('EmailVerification');
       setSubmitting(false);
     } catch (error) {
       setMessage('Signup failed: ', error.message);
@@ -113,7 +117,11 @@ const Signup = () => {
                 </RegularButton>
               )}
 
-              <PressableText style={{paddingVertical: 15}} onPress={() => {}}>
+              <PressableText
+                style={{paddingVertical: 15}}
+                onPress={() => {
+                  moveTo('Login');
+                }}>
                 Sign in to existing account
               </PressableText>
             </>

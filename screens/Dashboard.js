@@ -17,7 +17,10 @@ const TopBg = styled.View`
   top: -30px;
 `;
 
-const DashBoard = () => {
+const DashBoard = ({navigation}) => {
+  const moveTo = (screen, payload) => {
+    navigation.navigate(screen, {...payload});
+  };
   return (
     <MainContainer style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0}}>
       <TopBg />

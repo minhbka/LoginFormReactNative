@@ -14,13 +14,16 @@ import RowContainer from '../components/Containers/RowContainer';
 
 const {primary, secondary} = colors;
 
-const Login = () => {
+const Login = ({navigation}) => {
   const [message, setMessage] = useState('');
   const [isSuccessMessage, setIsSuccessMessage] = useState(false);
+  const moveTo = (screen, payload) => {
+    navigation.navigate(screen, {...payload});
+  };
   const handleLogin = async (credentials, setSubmitting) => {
     try {
       setMessage(null);
-
+      moveTo('Dashboard');
       setSubmitting(false);
     } catch (error) {
       setMessage('Login failed: ', error.message);
@@ -40,7 +43,7 @@ const Login = () => {
               setMessage('Please fill in all the fields');
               setSubmitting(false);
             } else {
-              handleLogin(value, setSubmitting);
+              handleLogin(values, setSubmitting);
             }
           }}>
           {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (
@@ -79,10 +82,16 @@ const Login = () => {
                 </RegularButton>
               )}
               <RowContainer>
-                <PressableText onPress={() => {}}>
+                <PressableText
+                  onPress={() => {
+                    moveTo('Signup');
+                  }}>
                   New account sign up
                 </PressableText>
-                <PressableText onPress={() => {}}>
+                <PressableText
+                  onPress={() => {
+                    moveTo('ForgotPassword');
+                  }}>
                   Forgot Password
                 </PressableText>
               </RowContainer>
